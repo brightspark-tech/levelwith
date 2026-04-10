@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LevelWith</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="top">
+        <div class="brand">
+          <span class="logo">LevelWith</span>
+          <span class="tagline">Let me level with you.</span>
+        </div>
+        <div class="header-actions">
+          <button
+            id="pinSidebar"
+            class="icon-btn"
+            title="Pin to sidebar (or floating window in Arc)"
+          >
+            📌
+          </button>
+          <button id="openOptions" class="icon-btn" title="Settings">⚙</button>
+        </div>
+      </header>
+
+      <div id="noKey" class="banner hidden">
+        No API key set.
+        <a href="#" id="openOptionsLink">Open settings</a> to add one.
+      </div>
+
+      <!-- Soft nudge shown when the user hasn't filled in their About Me
+           profile. LevelWith still works without one, but examples and
+           analogies are much sharper when it knows a bit about the user. -->
+      <div id="profileTip" class="banner tip-banner hidden">
+        <span class="tip-banner-body">
+          <strong>Tip:</strong> LevelWith tailors analogies and examples to you.
+          <a href="#" id="openOptionsFromTip">Add a quick profile</a>
+          for sharper results — optional but makes a big difference.
+        </span>
+        <button
+          id="dismissProfileTip"
+          class="tip-banner-dismiss"
+          type="button"
+          aria-label="Dismiss tip"
+          title="Dismiss"
+        >
+          ×
+        </button>
+      </div>
+
+      <div id="inputView" class="view">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-mode="page">Page</button>
+          <button class="tab" data-mode="text">Paste</button>
+          <button class="tab" data-mode="question">Ask</button>
+          <button class="tab" data-mode="image">Image</button>
+          <button class="tab" data-mode="glossary">Glossary</button>
+          <button class="tab" data-mode="history">History</button>
+        </div>
+
+        <div
+          id="levelSelector"
+          class="level-selector"
+          role="group"
+          aria-label="Explanation depth"
+        >
+          <span class="level-selector-label">Depth</span>
+          <div class="level-options">
+            <button
+              type="button"
+              class="level-option"
+              data-level="eli5"
+              title="Like I'm five — everyday analogies, no jargon."
+            >
+              ELI5
+            </button>
+            <button
+              type="button"
+              class="level-option active"
+              data-level="adult"
+              title="Plain English for a curious adult — the default."
+            >
+              Plain
+            </button>
+            <button
+              type="button"
+              class="level-option"
+              data-level="pro"
+              title="Assume I know the basics — don't over-explain."
+            >
+              Pro
+            </button>
+            <button
+              type="button"
+              class="level-option"
+              data-level="expert"
+              title="Technical precision welcome — treat me like a peer."
+            >
+              Expert
+            </button>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-panel="page">
+          <p class="panel-help">
+            I'll read the page you're on and level with you — no jargon, no
+            hype.
+          </p>
+          <div id="pagePreview" class="page-preview"></div>
+          <label id="deepDiveRow" class="deep-dive-row">
+            <input id="deepDiveToggle" type="checkbox" />
+            <span>
+              <strong>Deep dive</strong>
+              <span class="help-inline"
+                >— also read up to ~10 related pages on this site (slower,
+                better for full product overviews)</span
+              >
+            </span>
+          </label>
+        </div>
+
+        <div class="tab-panel hidden" data-panel="text">
+          <p class="panel-help">
+            Paste anything — marketing copy, a tweet, a dense paragraph from
+            docs. I'll cut through it.
+          </p>
+          <textarea
+            id="textInput"
+            rows="6"
+            placeholder="Paste text here..."
+          ></textarea>
+        </div>
+
+        <div class="tab-panel hidden" data-panel="question">
+          <p class="panel-help">Ask anything. I'll level with you, not lecture you.</p>
+          <textarea
+            id="questionInput"
+            rows="4"
+            placeholder="e.g. what is a vector database?"
+          ></textarea>
+        </div>
+
+        <div class="tab-panel hidden" data-panel="image">
+          <p class="panel-help">
+            Drop a screenshot, or click to choose. I'll read the image and
+            explain it.
+          </p>
+          <label id="imageDrop" class="drop-zone" for="imageFile">
+            <span id="imageDropText">Drop image or click to select</span>
+            <img id="imagePreview" class="hidden" alt="preview" />
+          </label>
+          <input id="imageFile" type="file" accept="image/*" class="hidden" />
+          <textarea
+            id="imageContext"
+            rows="2"
+            placeholder="Optional: what do you want to know about it?"
+          ></textarea>
+        </div>
+
+        <div class="tab-panel hidden" data-panel="glossary">
+          <div class="history-header">
+            <p class="panel-help">
+              Every jargon term LevelWith has decoded for you. Dedupes
+              automatically — newest definitions win.
+            </p>
+            <button id="glossaryClear" class="ghost small">Clear</button>
+          </div>
+          <input
+            id="glossarySearch"
+            type="text"
+            placeholder="Search terms or definitions..."
+            autocomplete="off"
+          />
+          <div id="glossaryList" class="glossary-list"></div>
+          <div id="glossaryEmpty" class="empty-state hidden">
+            No jargon saved yet. Explain something with buzzwords and LevelWith
+            will start building your glossary.
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" data-panel="history">
+          <div class="history-header">
+            <p class="panel-help">
+              Recent explanations. Click any entry to re-open it.
+            </p>
+            <button id="historyManage" class="ghost small">Manage</button>
+          </div>
+          <div id="historyList" class="history-list"></div>
+          <div id="historyEmpty" class="empty-state hidden">
+            No explanations saved yet. Explain something and it'll show up
+            here.
+          </div>
+        </div>
+
+        <button id="explainBtn" class="primary full">Level with me</button>
+      </div>
+
+      <div id="loadingView" class="view hidden">
+        <div class="spinner"></div>
+        <p class="loading-text">Leveling with you...</p>
+      </div>
+
+      <div id="resultView" class="view hidden">
+        <div id="restoredBadge" class="restored-badge hidden">
+          Viewing saved explanation
+        </div>
+
+        <div id="resultLevelStrip" class="level-strip" aria-label="Re-level this explanation">
+          <span class="level-strip-label">Re-level:</span>
+          <div class="level-options compact">
+            <button type="button" class="level-option" data-level="eli5">ELI5</button>
+            <button type="button" class="level-option" data-level="adult">Plain</button>
+            <button type="button" class="level-option" data-level="pro">Pro</button>
+            <button type="button" class="level-option" data-level="expert">Expert</button>
+          </div>
+        </div>
+
+        <div id="resultContent"></div>
+
+        <!-- Contextual nudge: only shown on the result view when the user
+             hasn't filled in their profile. This is where the generic
+             examples actually land, so the nudge is most motivating here. -->
+        <div id="resultProfileNudge" class="result-nudge hidden">
+          <span class="result-nudge-icon">✨</span>
+          <span class="result-nudge-body">
+            Want sharper examples than these? LevelWith can tailor them to
+            your actual work and hobbies —
+            <a href="#" id="openOptionsFromResultNudge">add a quick profile</a>.
+          </span>
+        </div>
+
+        <div id="followupChips" class="followup-chips hidden" aria-label="Suggested follow-up questions"></div>
+
+        <div class="chat">
+          <div id="chatHistory" class="chat-history"></div>
+          <div class="chat-input-row">
+            <input
+              id="chatInput"
+              type="text"
+              placeholder="Ask a follow-up..."
+              autocomplete="off"
+            />
+            <button id="chatSend" class="primary">Send</button>
+          </div>
+        </div>
+
+        <div class="result-footer">
+          <button id="newBtn" class="ghost">← Level with me about something else</button>
+        </div>
+      </div>
+
+      <div id="errorView" class="view hidden">
+        <div class="error-box">
+          <h3>Something went wrong</h3>
+          <p id="errorText"></p>
+          <button id="errorBack" class="ghost">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="resizeHandle" title="Drag to resize"></div>
+
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>

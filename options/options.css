@@ -1,0 +1,307 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* LevelWith — Ember palette, mirroring popup.css so the whole
+     extension feels like one product. Warm amber → burnt orange
+     primary, charcoal text, warm neutrals. */
+  --bg: #faf8f5;           /* warm page background */
+  --card: #ffffff;
+  --border: #eae6de;       /* warm beige border */
+  --text: #1c1917;         /* near-black warm slate */
+  --muted: #78716c;        /* warm gray */
+
+  --primary: #ea580c;      /* burnt orange — the spark */
+  --primary-hover: #c2410c;
+  --primary-soft: #fff7ed; /* amber-50 */
+  --amber: #f59e0b;        /* gradient stop */
+  --accent: #fef3c7;       /* amber-100 */
+  --accent-border: #fde68a;
+
+  --success: #15803d;
+  --danger: #b91c1c;
+
+  --focus-ring: rgba(234, 88, 12, 0.18);
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wrap {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 24px 80px;
+}
+
+header h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  /* Matching the popup wordmark: amber → burnt-orange gradient. */
+  background: linear-gradient(135deg, var(--amber) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+header .tagline {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
+}
+
+.subtitle {
+  margin: 0 0 28px;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 2px rgba(28, 25, 23, 0.03);
+}
+
+.card h2 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.help {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.help a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.help a:hover {
+  text-decoration: underline;
+}
+
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+input[type='text'],
+input[type='password'],
+select,
+textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.brand-footer {
+  margin: 36px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.brand-footer strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+button {
+  font-family: inherit;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+button:hover {
+  background: var(--primary-soft);
+}
+
+button.primary {
+  background: linear-gradient(135deg, var(--amber) 0%, var(--primary) 100%);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(234, 88, 12, 0.18);
+  transition: filter 0.12s, box-shadow 0.12s;
+}
+
+button.primary:hover {
+  filter: brightness(0.96) saturate(1.05);
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.24);
+}
+
+button.ghost {
+  background: transparent;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.status.success {
+  color: var(--success);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.checkbox-row input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+input[type='number'] {
+  width: 120px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: #fff;
+  outline: none;
+}
+
+input[type='number']:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.provider-panel {
+  margin-top: 16px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--border);
+}
+
+code {
+  font-family:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  background: var(--primary-soft);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #7c2d12;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.status.warning {
+  color: #b45309; /* amber-700 — distinct from error red */
+}
+
+/* Inline "(optional)" hint next to a label */
+.label-hint {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 12px;
+  margin-left: 6px;
+}
+
+/* Ember-tinted callout used for the Ollama Cloud notice. */
+.cloud-notice {
+  margin: 14px 0 12px;
+  padding: 12px 14px;
+  background: var(--primary-soft);
+  border: 1px solid var(--accent-border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+}
+
+.cloud-notice-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #7c2d12; /* matches <code> color, ties it to the palette */
+}
+
+.cloud-notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--amber), var(--primary));
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.cloud-notice-body {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.5;
+}

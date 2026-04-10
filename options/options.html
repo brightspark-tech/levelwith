@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LevelWith — Settings</title>
+        <link rel="stylesheet" href="options.css" />
+    </head>
+    <body>
+        <main class="wrap">
+            <header>
+                <h1>LevelWith</h1>
+                <p class="tagline">Let me level with you.</p>
+                <p class="subtitle">
+                    Cuts through tech and marketing jargon. Explains any page, selection, screenshot, or question in
+                    plain English — shaped around you.
+                </p>
+            </header>
+
+            <section class="card">
+                <h2>About you</h2>
+                <p class="help">
+                    This profile is injected into every prompt so analogies and examples are grounded in your world.
+                    Skip any field you don't feel like filling in.
+                </p>
+
+                <label for="work">Your work or role</label>
+                <input id="work" type="text" placeholder="e.g. product designer at a fintech startup" />
+
+                <label for="hobbies">Hobbies and interests</label>
+                <input id="hobbies" type="text" placeholder="e.g. cooking, rock climbing, sci-fi novels" />
+
+                <label for="techLevel">Tech comfort level</label>
+                <select id="techLevel">
+                    <option value="beginner">Beginner — avoid acronyms</option>
+                    <option value="intermediate" selected>Intermediate — I know the basics</option>
+                    <option value="advanced">Advanced — technical is fine</option>
+                </select>
+
+                <label for="knowsWell">Topics you already understand well</label>
+                <input id="knowsWell" type="text" placeholder="e.g. REST APIs, spreadsheets, basic ML" />
+
+                <label for="analogyStyle">Preferred analogy style</label>
+                <input id="analogyStyle" type="text" placeholder="e.g. cooking, everyday objects, surprise me" />
+            </section>
+
+            <section class="card">
+                <h2>Provider &amp; model</h2>
+                <p class="help">
+                    Choose which model answers your questions. You can swap any time. API keys are stored locally in
+                    your browser.
+                </p>
+
+                <label for="provider">Provider</label>
+                <select id="provider">
+                    <option value="claude">Anthropic Claude</option>
+                    <option value="openai">OpenAI</option>
+                    <option value="ollama">Ollama (local / LAN)</option>
+                </select>
+
+                <!-- Claude -->
+                <div id="claudePanel" class="provider-panel">
+                    <label for="claudeModel">Claude model</label>
+                    <select id="claudeModel"></select>
+
+                    <label for="claudeKey">Anthropic API key</label>
+                    <input
+                        id="claudeKey"
+                        type="password"
+                        placeholder="sk-ant-..."
+                        autocomplete="off"
+                        spellcheck="false"
+                    />
+                    <div class="row">
+                        <button id="toggleClaudeKey" type="button" class="ghost">Show</button>
+                        <span class="help" style="margin: 0">
+                            Get one at
+                            <a href="https://console.anthropic.com/settings/keys" target="_blank"
+                                >console.anthropic.com/settings/keys</a
+                            >.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- OpenAI -->
+                <div id="openaiPanel" class="provider-panel hidden">
+                    <label for="openaiModel">OpenAI model</label>
+                    <select id="openaiModel"></select>
+
+                    <label for="openaiKey">OpenAI API key</label>
+                    <input id="openaiKey" type="password" placeholder="sk-..." autocomplete="off" spellcheck="false" />
+                    <div class="row">
+                        <button id="toggleOpenaiKey" type="button" class="ghost">Show</button>
+                        <span class="help" style="margin: 0">
+                            Get one at
+                            <a href="https://platform.openai.com/api-keys" target="_blank"
+                                >platform.openai.com/api-keys</a
+                            >.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Ollama -->
+                <div id="ollamaPanel" class="provider-panel hidden">
+                    <label for="ollamaBaseUrl">Base URL</label>
+                    <input
+                        id="ollamaBaseUrl"
+                        type="text"
+                        placeholder="http://localhost:11434 or http://192.168.1.50:11434"
+                        spellcheck="false"
+                    />
+                    <p class="help" style="margin-top: 6px">
+                        For a remote Ollama (e.g. your Proxmox container), use the host's IP and make sure Ollama was
+                        started with
+                        <code>OLLAMA_HOST=0.0.0.0</code>. Purely local models don't need an API key — just point
+                        LevelWith at the host.
+                    </p>
+
+                    <label for="ollamaModel">Model</label>
+                    <div class="row" style="gap: 8px; margin: 0">
+                        <input
+                            id="ollamaModel"
+                            type="text"
+                            placeholder="llama3.1:8b, llava, mistral-small, glm-5:cloud, ..."
+                            spellcheck="false"
+                            style="flex: 1"
+                        />
+                        <button id="testOllama" type="button" class="ghost">Test</button>
+                    </div>
+                    <p id="ollamaStatus" class="status" style="margin-top: 8px"></p>
+                    <p class="help" style="margin-top: 6px">
+                        For image mode, pick a vision-capable model like
+                        <code>llava</code>, <code>llama3.2-vision</code>, or <code>bakllava</code>.
+                    </p>
+
+                    <!-- Cloud-model notice: hidden by default, shown by options.js
+                         whenever the model field contains a ":cloud" tag. -->
+                    <div id="ollamaCloudNotice" class="cloud-notice hidden">
+                        <div class="cloud-notice-title">
+                            <span class="cloud-notice-icon">☁</span>
+                            Ollama Cloud model detected
+                        </div>
+                        <p class="cloud-notice-body">
+                            Models with a <code>:cloud</code> tag run on Ollama's hosted service, not on your local
+                            host. For these, LevelWith talks directly to
+                            <code>https://ollama.com/api/chat</code> — the Base URL above is ignored and your local
+                            Ollama host doesn't even need to be running. All that matters is the API key below.
+                        </p>
+                    </div>
+
+                    <label for="ollamaKey">
+                        Ollama API key
+                        <span class="label-hint">(optional — only required for cloud models)</span>
+                    </label>
+                    <input
+                        id="ollamaKey"
+                        type="password"
+                        placeholder="leave blank for purely local models"
+                        autocomplete="off"
+                        spellcheck="false"
+                    />
+                    <div class="row">
+                        <button id="toggleOllamaKey" type="button" class="ghost">Show</button>
+                        <span class="help" style="margin: 0">
+                            Generate one at
+                            <a href="https://ollama.com/settings/keys" target="_blank"
+                                >ollama.com/settings/keys</a
+                            >. Stored locally in your browser.
+                        </span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>History</h2>
+                <p class="help">
+                    LevelWith keeps a local log of your recent explanations so you can re-open them. Stored in your
+                    browser only — never synced.
+                </p>
+
+                <label class="checkbox-row">
+                    <input id="historyEnabled" type="checkbox" checked />
+                    <span>Save explanations to history</span>
+                </label>
+
+                <label for="maxHistory">Maximum entries to keep</label>
+                <input id="maxHistory" type="number" min="5" max="200" step="5" value="25" />
+                <p class="help" style="margin-top: 6px">When full, the oldest entry is dropped. Capped at 200.</p>
+
+                <div class="row">
+                    <button id="clearHistory" type="button" class="ghost">Clear all history</button>
+                    <span id="historyStatus" class="status"></span>
+                </div>
+            </section>
+
+            <div class="footer-row">
+                <button id="save" type="button" class="primary">Save settings</button>
+                <span id="saveStatus" class="status"></span>
+            </div>
+
+            <p class="brand-footer">
+                <strong>LevelWith</strong> v0.2.0 &middot; Built by <strong>BrightSpark Technologies, LLC</strong><br />
+                Your API keys and "About you" profile live only in your browser.
+            </p>
+        </main>
+
+        <script src="options.js" type="module"></script>
+    </body>
+</html>

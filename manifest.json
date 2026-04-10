@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "LevelWith — plain-English explainer",
+  "short_name": "LevelWith",
+  "version": "0.2.0",
+  "description": "Let me level with you. Cuts through tech and marketing jargon on any page, selection, screenshot, or question — shaped around you.",
+  "author": "BrightSpark Technologies, LLC",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://api.anthropic.com/*",
+    "https://api.openai.com/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "LevelWith — let me level with you",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "side_panel": {
+    "default_path": "popup/popup.html#sidepanel"
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Open LevelWith"
+    }
+  }
+}
