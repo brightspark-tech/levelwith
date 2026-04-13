@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# Build artifacts
+*.zip
+
+# Environment / secrets
+.env
+
+# Internal launch materials (kept locally, not in the public repo)
+launch-kit/
+
+# Editor
+.vscode/
+.idea/
+
+# Node (if ever added)
+node_modules/

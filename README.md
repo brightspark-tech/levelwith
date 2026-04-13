@@ -1,12 +1,16 @@
 # LevelWith
 
-> **Let me level with you.** A Chrome extension that cuts through tech and marketing jargon and explains things in plain English — shaped around you, not a generic audience.
+> **Let me level with you.** A Chrome extension that explains web pages, articles, and jargon in plain English — shaped around you, not a generic audience.
 
-Built by **BrightSpark Technologies, LLC**.
+**[Install from Chrome Web Store](#)** · **[Website](https://levelwith.io)** · **[Privacy Policy](https://levelwith.io/privacy)**
 
-Point it at any page (a vague AI product landing page, a dense docs section, a contract clause), highlight some confusing text, paste a tweet, drop in a screenshot, or just ask a free-form question. You get back a TL;DR, a no-fluff "what it actually is", an analogy grounded in **your** work and hobbies, concrete examples of how **you'd** use it, a jargon decoder, and an honest "red flags" callout when the source is hiding behind buzzwords.
+Built by [BrightSpark Technologies, LLC](https://brightspark-tech.app).
 
-Pluggable LLM backend — pick **Claude**, **OpenAI**, or **Ollama** (local or LAN). Defaults to `claude-sonnet-4-6`.
+---
+
+Point it at any page (a dense docs section, a vague AI product landing page, a contract clause), highlight some confusing text, paste a tweet, drop in a screenshot, or just ask a free-form question. You get back a TL;DR, a no-fluff "what it actually is", an analogy grounded in **your** work and hobbies, concrete examples of how **you'd** use it, a jargon decoder, and an honest "red flags" callout when the source is hiding behind buzzwords.
+
+Pluggable LLM backend — pick **Claude**, **OpenAI**, or **Ollama** (local or cloud). Defaults to `claude-sonnet-4-6`.
 
 ## Why LevelWith is different
 
@@ -14,38 +18,52 @@ Most explainer extensions treat every user the same. LevelWith asks once who you
 
 Three principles:
 
-1. **Personal by default.** The "About you" profile is injected into every prompt. Analogies are reached for from your world, not generic ones.
-2. **Honest about marketing fluff.** When a page is vague, overpromising, or hiding pricing, the `red_flags` field calls it out. That's the whole point of "leveling with you."
-3. **Bring your own brain (and your own keys).** No backend. No telemetry. Your API keys stay in your browser. You can run it fully local against Ollama if you want.
+1. **Personal by default.** The "About you" profile is injected into every prompt. Analogies are drawn from your world, not generic ones.
+2. **Honest about marketing fluff.** When a page is vague, overpromising, or hiding pricing, the `red_flags` section calls it out. That's the whole point of "leveling with you."
+3. **Bring your own keys.** No backend. No telemetry. Your API keys stay in your browser. You can run it fully local against Ollama if you want.
 
 ## Features
 
-- **Explain this page** — reads the active tab's main content and breaks it down.
-- **Deep dive** — crawls up to ~10 same-origin pages (pricing, features, about, docs) so explanations of vague marketing sites cover the whole product, not just the landing page.
-- **Multiple providers** — Claude, OpenAI, or any Ollama instance on localhost or your LAN (e.g. a Proxmox container).
-- **Right-click any selection** → *LevelWith: explain this selection* in the context menu.
-- **Paste text** — marketing copy, a tweet thread, a doc snippet.
-- **Drop a screenshot** — vision-capable models read the image directly (Claude, GPT-4o, llava, llama3.2-vision).
+- **Explain this page** — reads the active tab's main content and breaks it down
+- **Deep dive** — crawls up to ~10 same-origin pages (pricing, features, about, docs) so explanations cover the whole product, not just the landing page
+- **Four depth levels** — ELI5, Adult, Pro, Expert — switch on any result and LevelWith re-explains in place
+- **Right-click any selection** — "LevelWith: explain this selection" in the context menu
+- **Drop a screenshot** — vision-capable models read the image directly (Claude, GPT-4o, llava, llama3.2-vision)
 - **Free-form questions** — "what is a vector database?"
-- **Follow-up chat** — keep drilling down after the first answer.
-- **Personalized analogies** — a one-time "About you" profile shapes every explanation.
-- **Honest red flags** — calls out vague marketing copy when it sees it.
-- **History tab** — browse and reopen past explanations; configurable cap.
-- **Pin as sidebar** — persistent side panel in Chrome/Edge/Brave; floating detached window in Arc.
-- **Keyboard shortcut** — `Cmd+Shift+L` (Mac) / `Ctrl+Shift+L` (Windows/Linux).
+- **Follow-up chat** — keep drilling down after the first answer, with starter question chips
+- **Personalized analogies** — a one-time "About you" profile shapes every explanation
+- **Growing glossary** — every jargon term LevelWith decodes is saved to a searchable personal dictionary
+- **History tab** — browse and reopen past explanations; configurable cap
+- **Multiple providers** — Claude, OpenAI, or any Ollama instance (local, LAN, or Ollama Cloud)
+- **Pin as sidebar** — persistent side panel in Chrome/Edge/Brave; floating detached window in Arc
+- **Keyboard shortcut** — `Cmd+Shift+L` (Mac) / `Ctrl+Shift+L` (Windows/Linux)
+- **Honest red flags** — calls out vague marketing copy when it sees it
 
-## Install (unpacked)
+## Install
 
-1. Open Chrome (or any Chromium browser) and go to `chrome://extensions`.
-2. Turn on **Developer mode** in the top-right corner.
-3. Click **Load unpacked** and select this folder.
-4. Pin the extension from the puzzle icon in the toolbar.
-5. Click the gear icon in the popup (or right-click the extension icon → **Options**) and:
-   - **Pick a provider:**
-     - *Claude* — paste your Anthropic key from [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys).
-     - *OpenAI* — paste your key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
-     - *Ollama* — set the base URL (e.g. `http://localhost:11434` or `http://192.168.1.50:11434` for a remote host) and pick a model. Click **Test** to ping it and auto-list installed models.
-   - Fill in your "About you" profile — work, hobbies, tech level, things you already understand well. This gets injected into every prompt.
+### From the Chrome Web Store (recommended)
+
+**[Install LevelWith](#)** — free, takes 5 seconds.
+
+> *The Chrome Web Store link will be updated once the listing is approved.*
+
+### From source (developers)
+
+1. Clone this repo.
+2. Open `chrome://extensions` in Chrome (or any Chromium browser).
+3. Turn on **Developer mode** in the top-right corner.
+4. Click **Load unpacked** and select this folder.
+5. Pin the extension from the puzzle icon in the toolbar.
+
+### Setup
+
+Click the gear icon in the popup (or right-click the extension icon → **Options**) and:
+
+- **Pick a provider:**
+  - *Claude* — paste your Anthropic key from [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
+  - *OpenAI* — paste your key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+  - *Ollama* — set the base URL (e.g. `http://localhost:11434`) and pick a model. Click **Test** to ping it and auto-list installed models.
+- **Fill in your "About you" profile** — work, hobbies, tech level, things you already understand well. This gets injected into every prompt.
 
 That's it. Visit any page, click the toolbar icon (or `Cmd+Shift+L`), and hit **Level with me**.
 
@@ -77,10 +95,8 @@ That's it. Visit any page, click the toolbar icon (or `Cmd+Shift+L`), and hit **
 
 ```
 levelwith/
-├── README.md              (this file)
-├── LICENSE                (MIT, © BrightSpark Technologies, LLC)
-├── manifest.json          (Manifest V3)
-├── background.js          (service worker)
+├── manifest.json          Manifest V3
+├── background.js          Service worker
 ├── popup/
 │   ├── popup.html
 │   ├── popup.js
@@ -90,19 +106,26 @@ levelwith/
 │   ├── options.js
 │   └── options.css
 ├── lib/
-│   ├── providers.js       (unified Claude / OpenAI / Ollama wrapper)
-│   └── prompts.js         (system prompt builder)
-└── icons/
-    ├── icon-16.png
-    ├── icon-48.png
-    └── icon-128.png
+│   ├── providers.js       Unified Claude / OpenAI / Ollama wrapper
+│   └── prompts.js         System prompt builder
+├── icons/
+│   ├── icon-16.png
+│   ├── icon-48.png
+│   └── icon-128.png
+├── LICENSE                MIT
+└── README.md              This file
 ```
 
 ## Privacy
 
-API keys are stored locally in your browser using `chrome.storage.local` and only sent to the provider you've chosen (`api.anthropic.com`, `api.openai.com`, or your Ollama host). No telemetry. No analytics. No backend server. The source code is right here if you want to audit it.
+LevelWith is BYOK (bring your own key) and has no backend server.
 
-Page content is only read when you explicitly click the icon or use the context menu. The extension uses the `activeTab` permission so it can only read a page after you interact with it.
+- API keys are stored locally in your browser using `chrome.storage.local` and only sent to the provider you've chosen.
+- Page content is only read when you explicitly click the icon or use the context menu.
+- No telemetry. No analytics. No tracking. No third-party SDKs.
+- All network traffic goes directly from your browser to your chosen LLM provider and nowhere else.
+
+Read the full privacy policy at [levelwith.io/privacy](https://levelwith.io/privacy).
 
 ## Customization
 
@@ -125,21 +148,18 @@ Note: No authentication is sent. Only do this on a network you trust.
 
 ## Pin to sidebar — browser differences
 
-Clicking the 📌 pin button in the popup header opens LevelWith as a persistent sidebar. How that looks depends on the browser:
+Clicking the pin button in the popup header opens LevelWith as a persistent sidebar. How that looks depends on the browser:
 
-- **Chrome / Edge / Brave (and most Chromium browsers):** opens in the native Chrome **Side Panel** on the right side of the browser.
-- **Arc:** Arc doesn't implement the Chrome Side Panel API (and has no plans to), so LevelWith falls back to a **floating detached window** anchored to the right edge of your current Arc window. It stays open while you navigate, behaves like a sidebar, and remembers its position. If you click the pin icon while the floating window is already open, it just focuses the existing one.
+- **Chrome / Edge / Brave (and most Chromium browsers):** opens in the native Chrome Side Panel on the right side of the browser.
+- **Arc:** Arc doesn't implement the Chrome Side Panel API, so LevelWith falls back to a floating detached window anchored to the right edge of your current Arc window. It stays open while you navigate and remembers its position.
 
 The fallback is automatic — the button detects which API is available and picks the right approach.
 
-## Roadmap
+## Contributing
 
-- Explain-level slider (ELI5 / Adult / Pro / Expert) so you can re-read the same source at a different depth.
-- Dedicated jargon glossary tab that aggregates every term LevelWith has ever decoded for you.
-- Starter follow-up question chips so you don't always have to think of the next question.
-- Streaming responses instead of waiting for the full JSON.
-- Per-domain profile overrides (e.g. "on ArXiv, explain as a researcher").
-- Export an explanation as markdown with one click.
+Found a bug? Have a feature idea? Open an issue or submit a pull request. All contributions are welcome.
+
+If you're modifying the prompt or adding a new provider, please test against a few diverse pages (a marketing landing page, a technical docs page, and a news article) to make sure the structured output still parses cleanly.
 
 ## License
 
